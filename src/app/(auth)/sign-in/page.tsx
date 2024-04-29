@@ -5,11 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useDebounceValue } from "usehooks-ts";
-import { SignUpSchema } from "@/schemas/signUpSchema";
-import axios, { AxiosError } from "axios";
-import { ApiResponse } from "@/Types/ApiResponse";
+import React, { useState } from "react";
 import {
   Form,
   FormField,
@@ -20,74 +16,47 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-
+import { SingInSchema } from "@/schemas/signInSchema";
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [usernameMessage, setUsernameMessage] = useState("");
-  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
-  const [isSubmiting, setIsSubmiting] = useState(false);
-  const debouncedUsername = useDebounceValue(username, 300);
   const { toast } = useToast();
   const router = useRouter();
 
   // zod implementation
 
-  const form = useForm<z.infer<typeof SignUpSchema>>({
-    resolver: zodResolver(SignUpSchema),
+  const form = useForm<z.infer<typeof SingInSchema>>({
+    resolver: zodResolver(SingInSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
+       identifier: '',
+       password: ''
     },
   });
 
-  useEffect(() => {
-    const checkusernameUnique = async () => {
-      if (debouncedUsername) {
-        setIsCheckingUsername(true);
-        setUsernameMessage("");
+  const onSubmit = async (data: z.infer<typeof SingInSchema>) => {
+    const result = await signIn("credentials", {
+      redirect: false,
+      identifier: data.identifier,
+      password: data.password,
+    });
 
-        try {
-          const response = await axios.get(
-            `/api/unquieusername?username=${debouncedUsername}`
-          );
-
-          setUsernameMessage(response.data.message);
-        } catch (error) {
-          const axiosError = error as AxiosError<ApiResponse>;
-          axiosError.response?.data.message ?? "Error checking username";
-        } finally {
-          setIsCheckingUsername(false);
-        }
-      }
-    };
-    checkusernameUnique();
-  }, [debouncedUsername]);
-
-  const onSubmit = async (data: z.infer<typeof SignUpSchema>) => {
-    setIsSubmiting(true);
-    try {
-      const response = await axios.post<ApiResponse>("/api/signup", data);
+    if (result?.error) {
       toast({
-        title: "Success",
-        description: response.data.message,
-      });
-
-      router.replace(`/verify/${username}`);
-      setIsSubmiting(false);
-    } catch (error) {
-      console.error("Error in signup", error);
-      const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage = axiosError.response?.data.message;
-      toast({
-        title: "Signup Failed",
-        description: errorMessage,
+        title: "Login failed",
+        description: "Incorrect username or password",
         variant: "destructive",
       });
-
-      setIsSubmiting(false);
     }
+
+    if (result?.url) {
+      router.replace("/dashboard")
+    } 
+
+    toast({
+      title: "Login failed",
+      description: "Incorrect username or password",
+      variant: "destructive",
+    });
   };
 
   return (
@@ -102,12 +71,12 @@ const LoginPage = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
-              name="username"
+              name="identifier"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email/Username</FormLabel>
-                  <Input {...field} />
+                  <Input placeholder="email/username" {...field} />
                   <FormMessage />
                 </FormItem>
               )}
