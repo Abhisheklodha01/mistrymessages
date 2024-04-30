@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
 
     const session = await getServerSession(authOptions);
     const user: User = session?.user as User;
-  
+    
     if (!session || !session?.user) {
       return Response.json(
         {
@@ -112,7 +112,7 @@ export async function GET(request: NextRequest) {
         return Response.json(
           {
             success: false,
-            message: "Error in getting message acceptance status=*",
+            message: "Error in getting message acceptance status",
           },
           { status: 500 }
         );

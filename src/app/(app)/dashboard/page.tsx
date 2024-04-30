@@ -1,6 +1,7 @@
 "use client";
 
 import { ApiResponse } from "@/Types/ApiResponse";
+import MessageCard from "@/components/MessageCard";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
@@ -18,6 +19,8 @@ const DashboardPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsloading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
+  console.log(messages);
+  
 
   const { toast } = useToast();
 
@@ -26,7 +29,6 @@ const DashboardPage = () => {
   };
 
   const { data: session } = useSession();
-
   const form = useForm({
     resolver: zodResolver(AcceptMessagesSchema),
   });
@@ -77,6 +79,7 @@ const DashboardPage = () => {
         });
       } finally {
         setIsSwitchLoading(false);
+        setIsloading(false)
       }
     },
     [setIsloading, setMessages]
