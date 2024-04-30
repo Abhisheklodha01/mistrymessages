@@ -1,10 +1,9 @@
 import OpenAI from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
-import { OPENAI_API_KEY } from "@/env_variable";
 import { NextResponse } from "next/server";
 
 const openai = new OpenAI({
-  apiKey: OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export const runtime = "edge";

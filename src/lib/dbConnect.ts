@@ -1,4 +1,4 @@
-import { MONGO_URI } from "@/env_variable";
+
 import mongoose from "mongoose";
 
 type ConnectionObject = {
@@ -15,7 +15,7 @@ async function dbconnect(): Promise<void> {
 
   try {
     const db = await mongoose.connect(
-     MONGO_URI ||
+     process.env.MONGO_URI ||
         ""
     );
 
