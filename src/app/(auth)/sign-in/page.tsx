@@ -39,13 +39,21 @@ const LoginPage = () => {
       identifier: data.identifier,
       password: data.password,
     });
-
+    console.log(result);
     if (result?.error) {
-      toast({
-        title: "Login failed",
-        description: "Incorrect username or password",
-        variant: "destructive",
-      });
+      if (result.error === 'CredentialsSignin') {
+        toast({
+          title: 'Login Failed',
+          description: 'Incorrect username or password',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: result.error,
+          variant: 'destructive',
+        });
+      }
     }
 
     if (result?.url) {
@@ -64,7 +72,7 @@ const LoginPage = () => {
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-2xl font-bold tracking-tight lg:text-3xl mb-6">
-            Welcome Back to True Feedback
+            Welcome Back to Mystry Message
           </h1>
           <p className="mb-4">Sign in to continue your secret conversations</p>
         </div>

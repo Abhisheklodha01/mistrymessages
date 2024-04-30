@@ -1,29 +1,14 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import './globals.css'
-import AuthProvider from "@/context/AuthProvider";
-import { Toaster } from "@/components/ui/toaster"
+import NavBar from "@/components/NavBar";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Mistry Messages",
-  description: "Mistry Messages true feedback app",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <AuthProvider>
-        <body className={inter.className}>
-          {children}
-          <Toaster />
-          </body>
-      </AuthProvider>
-    </html>
+    <div className="flex flex-col min-h-screen">
+      <NavBar />
+      {children}
+    </div>
   );
 }

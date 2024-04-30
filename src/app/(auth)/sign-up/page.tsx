@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDebounceCallback} from "usehooks-ts";
+import { useDebounceCallback } from "usehooks-ts";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -103,7 +103,7 @@ export default function SignUpForm() {
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-2xl font-extrabold tracking-tight lg:text-3xl mb-6">
-            Join True Feedback
+            Join Mystry Message
           </h1>
           <p className="mb-4">Sign up to start your anonymous adventure</p>
         </div>
