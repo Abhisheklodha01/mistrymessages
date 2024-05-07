@@ -135,10 +135,12 @@ const DashboardPage = () => {
 
   return (
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
-      <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
-      <div className="flex items-center justify-center">
-        <Link href={profileUrl}>
-          <Button>Send Feddback</Button>
+      <h1 className="text-2xl font-bold mb-4">User Dashboard</h1>
+      <div className="flex items-center justify-center ">
+        <Link href={profileUrl}
+          className="mt-5 mb-5 mr-8"
+        >
+          <Button>Send Feedback</Button>
         </Link>
       </div>
       <div className="mb-4">
