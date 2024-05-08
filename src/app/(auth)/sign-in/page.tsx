@@ -60,7 +60,7 @@ const LoginPage = () => {
       if (result?.url) {
         router.replace("/dashboard");
       }
-    });
+    }, []);
 
     toast({
       title: "Login failed",
