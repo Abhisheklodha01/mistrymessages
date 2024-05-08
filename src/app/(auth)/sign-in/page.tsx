@@ -55,12 +55,10 @@ const LoginPage = () => {
         });
       }
     }
-
-    useEffect(() => {
+    
       if (result?.url) {
         router.replace("/dashboard");
       }
-    }, []);
 
     toast({
       title: "Login failed",
