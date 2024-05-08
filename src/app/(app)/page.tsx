@@ -17,7 +17,9 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const router = useRouter()
   const { data: session } = useSession();
-  if(session) {
+  if(session == null ) {
+    router.push("/")
+  } else {
     router.push("/redirectuser")
   }
   return (

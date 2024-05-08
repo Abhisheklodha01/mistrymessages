@@ -13,10 +13,12 @@ import axios, { AxiosError } from "axios";
 import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const DashboardPage = () => {
+  const router = useRouter()
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsloading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
@@ -117,6 +119,7 @@ const DashboardPage = () => {
   };
 
   if (!session || !session.user) {
+    router.push("/")
     return <div>Please login</div>;
   }
 
