@@ -1,26 +1,25 @@
-'use client';
+"use client";
 
-import { Mail } from 'lucide-react'; 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Autoplay from 'embla-carousel-autoplay';
-import messages from '@/messages.json';
-
+import { Mail } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Autoplay from "embla-carousel-autoplay";
+import messages from "@/messages.json";
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '@/components/ui/carousel';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+} from "@/components/ui/carousel";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter()
+  const router = useRouter();
   const { data: session } = useSession();
-  if(!session || !session.user ) {
-    router.push("/")
+  if (!session?.user || session?.user == null) {
+    router.push("/");
   } else {
-    router.push("/redirectuser")
+    router.push("/redirectuser");
   }
   return (
     <>

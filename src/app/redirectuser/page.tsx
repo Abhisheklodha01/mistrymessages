@@ -1,7 +1,15 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const RedirectPage = () => {
+  const {data: session} = useSession()
+  const router = useRouter()
+
+  if(!session || !session.user) {
+    router.push("/")
+  }
   return (
     <main
       className="flex-grow flex flex-col min-h-screen
